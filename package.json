@@ -10,7 +10,11 @@
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-scripts": "3.1.1",
-    "typescript": "3.6.3"
+    "typescript": "3.6.3",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-immutable": "6.0.1",
+    "tslint-react": "4.0.0",
+    "node-sass": "4.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
