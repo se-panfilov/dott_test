@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+import { CarouselImage } from '../CarouselImage/CarouselImage';
 import { Doc, getBookCover } from '../services/BooksService';
 import { getComputedCoverSize } from '../utils/book.util';
 import './Carousel.scss';
 
 
-export function Carousel({ isAutoScroll = true }: CarouselProps): React.ReactElement {
+export function Carousel({ isAutoScroll = true, interval = 5000, onSelect }: CarouselProps): React.ReactElement {
   // TODO (S.Panfilov) wff with img type?
-  const [coversList, setCoversList] = useState<ReadonlyArray<any>>([]);
+  const [imgList, setImgList] = useState<ReadonlyArray<any>>([]);
 
   return (
-    <div>Carousel</div>
+    <div className="carousel">
+      Carousel
+      <CarouselImage url={imgUrl}/>
+    </div>
   );
 }
 
@@ -20,5 +24,7 @@ function getCovers(docs: ReadonlyArray<Doc>): any {
 
 export interface CarouselProps {
   booksList: ReadonlyArray<Doc>;
+  interval?: number;
+  onSelect: (item: Doc) => any;
   isAutoScroll: boolean;
 }
