@@ -39,7 +39,6 @@
     "jest-resolve": "24.8.0",
     "jest-watch-typeahead": "0.3.1",
     "mini-css-extract-plugin": "0.5.0",
-    "node-sass": "4.12.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.5.0",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -58,20 +57,23 @@
     "style-loader": "1.0.0",
     "terser-webpack-plugin": "1.4.1",
     "ts-pnp": "1.1.2",
+    "tslint": "5.19.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-immutable": "6.0.1",
     "tslint-react": "4.0.0",
-    "typescript": "3.6.3",
+    "tslint-loader": "3.5.4",
+    "typescript": "3.6.2",
     "url-loader": "2.1.0",
     "webpack": "4.39.1",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "node-sass": "4.12.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "lint": "tslint --progect .",
-    "lint:fix": "tslint --progect . --fix",
+    "lint": "tslint --project .",
+    "lint:fix": "tslint --project . --fix",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
@@ -104,18 +106,18 @@
     ],
     "testEnvironment": "jest-environment-jsdom-fourteen",
     "transform": {
-      ".+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      ".+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      ".+\\.module\\.(css|sass|scss)$"
+      "^.+\\.module\\.(css|sass|scss)$"
     ],
     "modulePaths": [],
     "moduleNameMapper": {
-      "react-native$": "react-native-web",
-      ".+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
       "web.js",

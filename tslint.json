@@ -2,7 +2,8 @@
   "extends": [
     "tslint:latest",
     "tslint-config-prettier",
-    "tslint-immutable"
+    "tslint-immutable",
+    "tslint-react"
   ],
   "rules": {
     "interface-name": [
@@ -45,6 +46,7 @@
     "object-literal-sort-keys": false,
     "comment-format": false,
     "prefer-const": true,
+    "jsx-no-lambda": false,
     "quotemark": [
       true,
       "single"
