@@ -12,12 +12,12 @@ export function CarouselNav({ direction, clickFunction, glyph }: CarouselNav): R
 }
 
 export interface CarouselNav {
-  direction: NavDirection;
+  direction: CarouselNavDirection;
   clickFunction: (...rest: any) => any;
   glyph: string;
 }
 
-export enum NavDirection {
+export enum CarouselNavDirection {
   left = 'left',
   right = 'right'
 }

@@ -1,30 +1,62 @@
 import React, { useState } from 'react';
-import { CarouselImage } from '../CarouselImage/CarouselImage';
-import { Doc, getBookCover } from '../services/BooksService';
-import { getComputedCoverSize } from '../utils/book.util';
+import { isDefined } from '../utils/utils';
 import './Carousel.scss';
+import { CarouselImage } from './CarouselImage/CarouselImage';
+import { CarouselNav, CarouselNavDirection } from './CarouselNav/CarouselNav';
 
+export function Carousel({ itemsList, isAutoScroll = true, interval = 5000, onSelect }: CarouselProps): React.ReactElement {
+  const [currentItemIndex, setCurrentItemIndex] = useState<number>(0);
 
-export function Carousel({ isAutoScroll = true, interval = 5000, onSelect }: CarouselProps): React.ReactElement {
-  // TODO (S.Panfilov) wff with img type?
-  const [imgList, setImgList] = useState<ReadonlyArray<any>>([]);
+  function goPrev(): void {
+    const index = currentItemIndex > 0 ? currentItemIndex - 1 : 0;
+    setCurrentItemIndex(index);
+  }
+
+  function goNext(): void {
+    // TODO (S.Panfilov) what about max number?
+    setCurrentItemIndex(currentItemIndex + 1);
+  }
 
   return (
     <div className="carousel">
-      Carousel
-      <CarouselImage url={imgUrl}/>
+      <CarouselNav
+        direction={CarouselNavDirection.left}
+        clickFunction={goPrev}
+        glyph="&#9664;"
+      />
+
+      <CarouselImage url={getImageUrl(itemsList, currentItemIndex)}/>
+
+      <CarouselNav
+        direction={CarouselNavDirection.right}
+        clickFunction={goNext}
+        glyph="&#9654;"
+      />
     </div>
   );
 }
 
-// TODO (S.Panfilov)  whatis the return type for an image?
-function getCovers(docs: ReadonlyArray<Doc>): any {
-  return docs.forEach(doc => getBookCover(doc, getComputedCoverSize()));
+function getImageUrl(list: ReadonlyArray<CarouselItem>, index: number): string | undefined {
+  if (!isDefined(list) || list.length === 0) return undefined;
+  const item = list[index];
+  if (!isDefined(item)) throw new Error(`Cannot find carousel item with index "${index}" in list of "${list.length}"`);
+  return item.img;
 }
 
+// TODO (S.Panfilov)  whatis the return type for an image?
+// function getCovers(docs: ReadonlyArray<Doc>): any {
+//   return docs.forEach(doc => getBookCover(doc, getComputedCoverSize()));
+// }
+
 export interface CarouselProps {
-  booksList: ReadonlyArray<Doc>;
+  itemsList: ReadonlyArray<CarouselItem>;
   interval?: number;
-  onSelect: (item: Doc) => any;
+  onSelect: (item: CarouselItem) => void;
   isAutoScroll: boolean;
+}
+
+export interface CarouselItem {
+  title?: string;
+  subTitle?: string;
+  img?: string;
 }

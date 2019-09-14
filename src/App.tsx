@@ -1,30 +1,45 @@
 import React, { useState } from 'react';
 import './App.scss';
-import { Carousel } from './Carousel/Carousel';
+import { Carousel, CarouselItem } from './Carousel/Carousel';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Doc, getBookCover, searchBook } from './services/BooksService';
 import { getComputedCoverSize } from './utils/book.util';
 
 function App(): React.ReactElement {
   const [booksList, setBooksList] = useState<ReadonlyArray<Doc>>([]);
+  const [carouselItemsList, setCarouselItemsList] = useState<ReadonlyArray<CarouselItem>>([]);
+  const coverSize = getComputedCoverSize();
+
+  function handleOnSearch(searchValue: string): void {
+    // TODO (S.Panfilov)  take care about requests order
+    searchBook(searchValue).then(({ docs }) => {
+      setBooksList(docs);
+
+      const result = docs
+        .map(async (doc) => ({ title: doc.title, subTitle: 'dssd', img: await getBookCover(doc, coverSize) }));
+      // .catch(err => `It shouldn't break anything!`)
+
+      Promise.all(result).then(resolved => {
+        console.log(resolved);
+        setCarouselItemsList(resolved);
+      });
+
+
+    });
+  }
 
   return (
     <div className="App">
-      <Carousel isAutoScroll={isAutoScroll()} booksList={booksList}/>
+      <Carousel itemsList={carouselItemsList} isAutoScroll={isAutoScroll()} onSelect={onItemSelect}/>
       <SearchBar placeholder="search" title="title" onSearch={handleOnSearch}/>
     </div>
   );
 }
 
-function handleOnSearch(searchValue: string): void {
-  // TODO (S.Panfilov)  take care about requests order
-  searchBook(searchValue).then(result => {
-    console.info(result);
-    return result.docs.forEach(doc => getBookCover(doc, getComputedCoverSize()));
-  });
-
-  console.info(searchValue);
+function onItemSelect(item: CarouselItem): void {
+  alert(`Selected item: ${item.title}`);
 }
+
 
 function isAutoScroll(): boolean {
   // TODO (S.Panfilov) should return false if tab in background

@@ -2,7 +2,7 @@ import React from 'react';
 import './CarouselImage.scss';
 
 export function CarouselImage({ url }: CarouselImageProps): React.ReactElement {
-  const styles = { backgroundImage: `url(${url})` };
+  const styles = { backgroundImage: url ? `url(${url})` : 'none' };
 
 
   return (
@@ -13,5 +13,5 @@ export function CarouselImage({ url }: CarouselImageProps): React.ReactElement {
 }
 
 export interface CarouselImageProps {
-  readonly url: string;
+  readonly url: string | undefined;
 }
