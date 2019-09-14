@@ -21,8 +21,8 @@ const isLocalhost = Boolean(
 );
 
 interface Config {
-  onSuccess?: (registration: ServiceWorkerRegistration) => void
-  onUpdate?: (registration: ServiceWorkerRegistration) => void
+  onSuccess?: (registration: ServiceWorkerRegistration) => void;
+  onUpdate?: (registration: ServiceWorkerRegistration) => void;
 }
 
 export function register(config?: Config): void {
@@ -40,7 +40,7 @@ export function register(config?: Config): void {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${ process.env.PUBLIC_URL }/service-worker.js`;
+      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
@@ -53,13 +53,13 @@ export function register(config?: Config): void {
           console.log(
             'This web app is being served cache-first by a service ' +
             'worker. To learn more, visit https://bit.ly/CRA-PWA'
-          )
-        })
+          );
+        });
       } else {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
       }
-    })
+    });
   }
 }
 
@@ -101,13 +101,13 @@ function registerValidSW(swUrl: string, config?: Config): void {
               }
             }
           }
-        }
-      }
+        };
+      };
     })
     .catch(error => {
       // tslint:disable-next-line:no-console
       console.error('Error during service worker registration:', error);
-    })
+    });
 }
 
 function checkValidServiceWorker(swUrl: string, config?: Config): void {
@@ -124,8 +124,8 @@ function checkValidServiceWorker(swUrl: string, config?: Config): void {
         navigator.serviceWorker.ready.then(registration => {
           registration.unregister().then(() => {
             window.location.reload();
-          })
-        })
+          });
+        });
       } else {
         // Service worker found. Proceed as normal.
         registerValidSW(swUrl, config);
@@ -135,14 +135,14 @@ function checkValidServiceWorker(swUrl: string, config?: Config): void {
       // tslint:disable-next-line:no-console
       console.log(
         'No internet connection found. App is running in offline mode.'
-      )
-    })
+      );
+    });
 }
 
 export function unregister(): void {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
       registration.unregister();
-    })
+    });
   }
 }

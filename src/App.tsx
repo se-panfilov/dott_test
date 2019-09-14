@@ -10,10 +10,10 @@ function App(): React.ReactElement {
 
   return (
     <div className='App'>
-      <Carousel isAutoScroll={ isAutoScroll() } booksList={ booksList }/>
-      <SearchBar placeholder='search' title='title' onSearch={ handleOnSearch }/>
+      <Carousel isAutoScroll={isAutoScroll()} booksList={booksList}/>
+      <SearchBar placeholder='search' title='title' onSearch={handleOnSearch}/>
     </div>
-  )
+  );
 }
 
 function handleOnSearch(searchValue: string): void {

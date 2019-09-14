@@ -10,7 +10,7 @@ export function Carousel({ isAutoScroll = true }: CarouselProps): React.ReactEle
 
   return (
     <div>Carousel</div>
-  )
+  );
 }
 
 // TODO (S.Panfilov)  whatis the return type for an image?
@@ -19,6 +19,6 @@ function getCovers(docs: ReadonlyArray<Doc>): any {
 }
 
 export interface CarouselProps {
-  booksList: ReadonlyArray<Doc>
-  isAutoScroll: boolean
+  booksList: ReadonlyArray<Doc>;
+  isAutoScroll: boolean;
 }

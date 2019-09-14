@@ -21,8 +21,8 @@ describe('Utils', () => {
     it('should return false', () => {
       expect(isDefined(undefined)).toBeFalsy();
       expect(isDefined(null)).toBeFalsy();
-    })
+    });
 
-  })
+  });
 
 });
