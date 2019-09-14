@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.scss';
+import { Carousel } from './Carousel/Carousel';
+import { SearchBar } from './SearchBar/SearchBar';
+import { Doc, getBookCover, searchBook } from './services/BooksService';
+import { getComputedCoverSize } from './utils/book.util';
 
-const App: React.FC = () => {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={ logo } className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
-    );
-};
+function App(): React.ReactElement {
+  const [booksList, setBooksList] = useState<ReadonlyArray<Doc>>([]);
+
+  return (
+    <div className='App'>
+      <Carousel isAutoScroll={ isAutoScroll() } booksList={ booksList }/>
+      <SearchBar placeholder='search' title='title' onSearch={ handleOnSearch }/>
+    </div>
+  )
+}
+
+function handleOnSearch(searchValue: string): void {
+  // TODO (S.Panfilov)  take care about requests order
+  searchBook(searchValue).then(result => {
+    console.info(result);
+    return result.docs.forEach(doc => getBookCover(doc, getComputedCoverSize()));
+  });
+
+  console.info(searchValue);
+}
+
+function isAutoScroll(): boolean {
+  // TODO (S.Panfilov) should return false if tab in background
+  return true;
+}
 
 export default App;

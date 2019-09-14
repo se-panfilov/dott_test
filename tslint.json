@@ -128,7 +128,6 @@
       "ignore-template-strings"
     ],
     "no-unused-expression": true,
-    "no-use-before-declare": true,
     "radix": true,
     "triple-equals": [
       true,
@@ -153,7 +152,6 @@
     "prefer-for-of": true,
     "no-duplicate-imports": true,
     "no-this-assignment": true,
-    "no-unused-variable": true,
     "no-require-imports": true,
     "object-literal-shorthand": false
   }
