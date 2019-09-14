@@ -9,9 +9,9 @@ function App(): React.ReactElement {
   const [booksList, setBooksList] = useState<ReadonlyArray<Doc>>([]);
 
   return (
-    <div className='App'>
+    <div className="App">
       <Carousel isAutoScroll={isAutoScroll()} booksList={booksList}/>
-      <SearchBar placeholder='search' title='title' onSearch={handleOnSearch}/>
+      <SearchBar placeholder="search" title="title" onSearch={handleOnSearch}/>
     </div>
   );
 }

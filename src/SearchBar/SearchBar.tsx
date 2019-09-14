@@ -23,11 +23,11 @@ export function SearchBar({ title, placeholder = 'Input your text', isEmitOnStop
   }
 
   return (
-    <div className='search-bar'>
-      <span className='search-bar__title'>{title}</span>
+    <div className="search-bar">
+      <span className="search-bar__title">{title}</span>
       <input
-        className='search-bar__input'
-        type='search'
+        className="search-bar__input"
+        type="search"
         placeholder={placeholder}
         value={searchValue}
         onChange={({ target }) => emitSearchValue(target ? target.value : '')}
