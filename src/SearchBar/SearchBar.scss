@@ -1,9 +1,26 @@
 .search-bar {
-  .__title {
+  display: block;
+  margin: 3px;
+  text-align: center;
+  width: 100%;
 
+  &__title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 
-  .__input {
-
+  &__input {
+    display: inline-block;
+    width: 100%;
+    max-width: 300px;
+    padding: 3px 5px;
+    border-radius: 3px;
+    outline: none;
   }
 }

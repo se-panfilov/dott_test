@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { isDefined } from '../utils/utils';
 import './SearchBar.scss';
 
-export function SearchBar({ title, placeholder = 'Input your text', isEmitOnStopTyping = true, minLength = 2, onSearch }: SearchBarProps): React.ReactElement {
+export function SearchBar({ title = 'Input your text', isEmitOnStopTyping = true, minLength = 2, onSearch }: SearchBarProps): React.ReactElement {
   const [searchValue, setSearchValue] = useState<string>('');
   const [dueTimeout, setDueTimeout] = useState<number | undefined>(undefined);
 
@@ -23,23 +23,22 @@ export function SearchBar({ title, placeholder = 'Input your text', isEmitOnStop
   }
 
   return (
-    <div className="search-bar">
+    <label className="search-bar">
       <span className="search-bar__title">{title}</span>
       <input
         className="search-bar__input"
         type="search"
-        placeholder={placeholder}
+        placeholder={title}
         value={searchValue}
         onChange={({ target }) => emitSearchValue(target ? target.value : '')}
       />
-    </div>
+    </label>
   );
 }
 
 
 export interface SearchBarProps {
-  title: string;
-  placeholder: string;
+  title?: string;
   isEmitOnStopTyping?: boolean; // TODO (S.Panfilov)  doesn't work
   minLength?: 2;
   onSearch: (searchValue: string) => any;

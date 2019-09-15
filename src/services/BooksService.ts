@@ -12,20 +12,13 @@ export function searchBook(searchText: string, page: number = 1): Promise<Search
     });
 }
 
-// TODO (S.Panfilov) fix the return type
-// export function getBookCover(isbn: string, size: CoverSize): Promise<Response> {
-export function getBookCover(doc: Doc, size: CoverSize): Promise<any> {
+export function getUrlCover(doc: Doc, size: CoverSize): string | undefined {
   const url = 'https://covers.openlibrary.org/b/';
   const sizeStr = `-${size}.jpg`;
 
   const bookId = getBookId(doc);
-  // TODO (S.Panfilov)
-  if (!isDefined(bookId)) return new Promise(() => false);
-
-  return fetch(url + bookId + sizeStr, { mode: 'no-cors' }).catch(e => {
-    // TODO (S.Panfilov) test
-    throw new Error(`Can't get Doc's cover for book with key: "${doc.key}", reason: "${e}"`);
-  });
+  if (!isDefined(bookId)) return undefined;
+  return url + bookId + sizeStr;
 }
 
 function getBookId(doc: Doc): string | number | undefined {

@@ -1,20 +1,21 @@
 import React from 'react';
+import './CarouselNav.scss';
 
-export function CarouselNav({ direction, clickFunction, glyph }: CarouselNav): React.ReactElement {
+export function CarouselNav({ direction, clickFunction }: CarouselNav): React.ReactElement {
   return (
-    <div
-      className={`slide-arrow ${direction}`}
-      onClick={clickFunction}
+    <button
+      type="button"
+      className={`carousel-nav -${direction}`}
+      onClick={() => clickFunction(CarouselNavDirection[direction])}
     >
-      {glyph}
-    </div>
+      {direction === CarouselNavDirection.right ? <span>&#9654;</span> : <span>&#9664;</span>}
+    </button>
   );
 }
 
 export interface CarouselNav {
   direction: CarouselNavDirection;
-  clickFunction: (...rest: any) => any;
-  glyph: string;
+  clickFunction: (direction: CarouselNavDirection) => void;
 }
 
 export enum CarouselNavDirection {
