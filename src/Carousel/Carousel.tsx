@@ -8,10 +8,15 @@ export function Carousel({ itemsList, isAutoScroll = true, interval = 5000 }: Ca
   const [currentItemIndex, setCurrentItemIndex] = useState<number>(0);
   const [autoScrollInterval, setAutoScrollInterval] = useState<number | undefined>(undefined);
 
+
+  // TODO (S.Panfilov) Autoscroll isn't finished: should stop when tab go background
   function startAutoScroll(shouldAutoScroll: boolean, time: number): void {
-    if (shouldAutoScroll && itemsList.length > 0) {
+    if (shouldAutoScroll) {
       if (isDefined(autoScrollInterval)) return;
-      const index = setInterval(goNext, time);
+      const index = setInterval(() => {
+        if (itemsList.length > 0 && isAutoScroll) goNext();
+        if (!isAutoScroll) stopAutosScroll();
+      }, time);
       setAutoScrollInterval(index as any);
     } else {
       stopAutosScroll();
@@ -23,8 +28,8 @@ export function Carousel({ itemsList, isAutoScroll = true, interval = 5000 }: Ca
   }
 
   useEffect(() => {
-    // startAutoScroll(isAutoScroll, interval);
-    // return stopAutosScroll;
+    startAutoScroll(isAutoScroll, interval);
+    return stopAutosScroll;
   }, []);
 
   function goPrev(): void {
