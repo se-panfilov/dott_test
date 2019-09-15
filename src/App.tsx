@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 import { Carousel, CarouselItem } from './Carousel/Carousel';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Doc, getBookCover, searchBook } from './services/BooksService';
+import { setOnTabActiveCallBack, setOnTabInActiveCallBack, stopWebPageStateDetect } from './services/BrowserService';
 import { getComputedCoverSize } from './utils/book.util';
 
 function App(): React.ReactElement {
   const [booksList, setBooksList] = useState<ReadonlyArray<Doc>>([]);
+  const [isAutoScroll, setIsAutoScroll] = useState<boolean>(true);
   const [carouselItemsList, setCarouselItemsList] = useState<ReadonlyArray<CarouselItem>>([]);
   const coverSize = getComputedCoverSize();
+
+  useEffect(() => {
+    setOnTabActiveCallBack(() => setIsAutoScroll(true));
+    setOnTabInActiveCallBack(() => setIsAutoScroll(false));
+
+    return stopWebPageStateDetect;
+  }, []);
 
   function handleOnSearch(searchValue: string): void {
     // TODO (S.Panfilov) take care about requests order
@@ -34,7 +43,7 @@ function App(): React.ReactElement {
 
   return (
     <div className="App">
-      <Carousel itemsList={carouselItemsList} isAutoScroll={isAutoScroll()} onSelect={onItemSelect}/>
+      <Carousel itemsList={carouselItemsList} isAutoScroll={isAutoScroll} onSelect={onItemSelect}/>
       <SearchBar placeholder="search" title="title" onSearch={handleOnSearch}/>
     </div>
   );
@@ -42,12 +51,6 @@ function App(): React.ReactElement {
 
 function onItemSelect(item: CarouselItem): void {
   alert(`Selected item: ${item.title}`);
-}
-
-
-function isAutoScroll(): boolean {
-  // TODO (S.Panfilov) should return false if tab in background
-  return true;
 }
 
 export default App;
