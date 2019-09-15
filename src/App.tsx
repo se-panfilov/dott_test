@@ -22,9 +22,12 @@ function App(): React.ReactElement {
   function handleOnSearch(searchValue: string): void {
     // TODO (S.Panfilov) take care about requests order
     searchBook(searchValue).then(({ docs }) => {
-      setBooksList(docs);
+      // TODO (S.Panfilov) let's use few docs for debug
+      const tempList: ReadonlyArray<Doc> = [docs[0]];
 
-      const result = docs
+      setBooksList(tempList);
+
+      const result = tempList
         .map(async (doc) => ({ title: doc.title, subTitle: 'dssd', img: await getBookCover(doc, coverSize) }));
 
 
