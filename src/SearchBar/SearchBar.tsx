@@ -14,7 +14,6 @@ export function SearchBar({ title = 'Input your text', isEmitOnStopTyping = true
 
     if (isEmitOnStopTyping) {
       const timeout = setTimeout(() => onSearch(value), 300);
-      // TODO (S.Panfilov) wtf with this type?
       setDueTimeout(timeout as any);
     } else {
       onSearch(value);
@@ -38,8 +37,8 @@ export function SearchBar({ title = 'Input your text', isEmitOnStopTyping = true
 
 
 export interface SearchBarProps {
-  title?: string;
-  isEmitOnStopTyping?: boolean; // TODO (S.Panfilov)  doesn't work
-  minLength?: 2;
-  onSearch: (searchValue: string) => any;
+  readonly title?: string;
+  readonly isEmitOnStopTyping?: boolean; // TODO (S.Panfilov)  doesn't work
+  readonly minLength?: 2;
+  readonly onSearch: (searchValue: string) => any;
 }

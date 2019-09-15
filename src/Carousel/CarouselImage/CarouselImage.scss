@@ -3,4 +3,13 @@
   background-position: center;
   border-radius: 5px;
   min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &__content {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+  }
 }

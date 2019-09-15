@@ -14,8 +14,8 @@ export function CarouselNav({ direction, clickFunction }: CarouselNav): React.Re
 }
 
 export interface CarouselNav {
-  direction: CarouselNavDirection;
-  clickFunction: (direction: CarouselNavDirection) => void;
+  readonly direction: CarouselNavDirection;
+  readonly clickFunction: (direction: CarouselNavDirection) => void;
 }
 
 export enum CarouselNavDirection {

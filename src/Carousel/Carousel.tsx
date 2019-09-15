@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { isDefined } from '../utils/utils';
 import './Carousel.scss';
 import { CarouselImage } from './CarouselImage/CarouselImage';
 import { CarouselNav, CarouselNavDirection } from './CarouselNav/CarouselNav';
 
 export function Carousel({ itemsList, isAutoScroll = true, interval = 5000 }: CarouselProps): React.ReactElement {
   const [currentItemIndex, setCurrentItemIndex] = useState<number>(0);
+  const [autoScrollInterval, setAutoScrollInterval] = useState<number | undefined>(undefined);
+
+  function startAutoScroll(shouldAutoScroll: boolean, time: number): void {
+    if (shouldAutoScroll && itemsList.length > 0) {
+      if (isDefined(autoScrollInterval)) return;
+      const index = setInterval(goNext, time);
+      setAutoScrollInterval(index as any);
+    } else {
+      stopAutosScroll();
+    }
+  }
+
+  function stopAutosScroll(): void {
+    clearInterval(autoScrollInterval);
+  }
+
+  useEffect(() => {
+    // startAutoScroll(isAutoScroll, interval);
+    // return stopAutosScroll;
+  }, []);
 
   function goPrev(): void {
     console.info('goPrev');
@@ -14,8 +35,8 @@ export function Carousel({ itemsList, isAutoScroll = true, interval = 5000 }: Ca
 
   function goNext(): void {
     console.info('goNext');
-    // TODO (S.Panfilov) what about max number? I guess we should startover, or... make another request?
-    setCurrentItemIndex(currentItemIndex + 1);
+    const val = (currentItemIndex < itemsList.length - 1) ? currentItemIndex + 1 : 0;
+    setCurrentItemIndex(val);
   }
 
   return (
@@ -28,7 +49,7 @@ export function Carousel({ itemsList, isAutoScroll = true, interval = 5000 }: Ca
       </div>
 
       <div className="carousel__image">
-        <CarouselImage url={getImageUrl(itemsList, currentItemIndex)}/>
+        {getCarouselImage(itemsList, currentItemIndex)}
       </div>
 
       <div className="carousel__nav -right">
@@ -41,23 +62,27 @@ export function Carousel({ itemsList, isAutoScroll = true, interval = 5000 }: Ca
   );
 }
 
-function getImageUrl(list: ReadonlyArray<CarouselItem>, index: number): string | undefined {
-  // if (!isDefined(list) || list.length === 0) return undefined;
-  // const item = list[index];
-  // if (!isDefined(item)) throw new Error(`Cannot find carousel item with index "${index}" in list of "${list.length}"`);
-  // return item.imgUrl;
-  // TODO (S.Panfilov)  debug
-  return 'http://covers.openlibrary.org/b/isbn/9780385533225-L.jpg';
+function getCarouselImage(itemsList: ReadonlyArray<CarouselItem>, currentItemIndex: number = 0): React.ReactElement {
+  if (itemsList[currentItemIndex]) {
+    return (
+      <CarouselImage url={itemsList[currentItemIndex].imgUrl}>
+        <div className="carousel__image-title">{itemsList[currentItemIndex].title}</div>
+        <div className="carousel__image-subtitle">{itemsList[currentItemIndex].subTitle}</div>
+      </CarouselImage>
+    );
+  }
+
+  return <CarouselImage url="/no-image.jpg"/>;
 }
 
 export interface CarouselProps {
-  itemsList: ReadonlyArray<CarouselItem>;
-  interval?: number;
-  isAutoScroll: boolean;
+  readonly itemsList: ReadonlyArray<CarouselItem>;
+  readonly interval?: number;
+  readonly isAutoScroll: boolean;
 }
 
 export interface CarouselItem {
-  title?: string;
-  subTitle?: string;
-  imgUrl?: string;
+  readonly title?: string;
+  readonly subTitle?: string;
+  readonly imgUrl?: string;
 }

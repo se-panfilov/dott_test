@@ -2,12 +2,10 @@ import { isDefined } from '../utils/utils';
 
 const requestConfig: RequestInit = { mode: 'cors' };
 
-// TODO (S.Panfilov) should return SearchResult
 export function searchBook(searchText: string, page: number = 1): Promise<SearchResult> {
   return fetch(`http://openlibrary.org/search.json?q=${encodeURIComponent(searchText)}&page=${page}`, requestConfig)
     .then(response => response.json())
     .catch(e => {
-      // TODO (S.Panfilov) test
       throw new Error(`Can't get proper book's search request for search text: "${searchText}", the reason is: "${e}"`);
     });
 }

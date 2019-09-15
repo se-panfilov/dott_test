@@ -27,11 +27,11 @@ export function stopWebPageStateDetect(): void {
 }
 
 export function setOnTabActiveCallBack(cb: () => void): void {
-  window.browserUtils.onFocusCB = cb;
+  window.browserUtils = { ...window.browserUtils, onFocusCB: cb };
 }
 
 export function setOnTabInActiveCallBack(cb: () => void): void {
-  window.browserUtils.onBlurCB = cb;
+  window.browserUtils = { ...window.browserUtils, onBlurCB: cb };
 }
 
 function onFocus(): void {
@@ -45,19 +45,21 @@ function onBlur(): void {
 }
 
 function setWebPageStateActive(): void {
-  window.browserUtils.isWebPageActiveState = true;
+  window.browserUtils = { ...window.browserUtils, isWebPageActiveState: true };
 }
 
 function setWebPageStateInactive(): void {
-  window.browserUtils.isWebPageActiveState = false;
+  window.browserUtils = { ...window.browserUtils, isWebPageActiveState: false };
 }
 
 declare global {
   interface Window {
-    browserUtils: {
-      onFocusCB?: () => void,
-      onBlurCB?: () => void,
-      isWebPageActiveState: boolean | undefined
-    };
+    browserUtils: BrowserUtils;
   }
+}
+
+interface BrowserUtils {
+  readonly onFocusCB?: () => void;
+  readonly onBlurCB?: () => void;
+  readonly isWebPageActiveState: boolean | undefined;
 }
