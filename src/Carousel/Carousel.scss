@@ -2,12 +2,11 @@
   position: relative;
   min-width: 420px;
   margin: 5px;
+  border-radius: 5px;
 
   &__nav {
     position: absolute;
     height: 100%;
-    background-color: black;
-    opacity: 0.5;
     top: 0;
     bottom: 0;
     z-index: 2;
@@ -20,9 +19,6 @@
       right: 0;
     }
 
-    &:active {
-      opacity: 0.55;
-    }
   }
 
   &__image {
