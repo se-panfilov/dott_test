@@ -17,11 +17,15 @@ function App(): React.ReactElement {
 
       const result = docs
         .map(async (doc) => ({ title: doc.title, subTitle: 'dssd', img: await getBookCover(doc, coverSize) }));
-      // .catch(err => `It shouldn't break anything!`)
+
 
       Promise.all(result).then(resolved => {
+        // TODO (S.Panfilov) wtf, some of those requests never resolves?
+        console.info('11111');
         console.log(resolved);
         setCarouselItemsList(resolved);
+      }).catch(err => {
+        console.log('some', err);
       });
 
 

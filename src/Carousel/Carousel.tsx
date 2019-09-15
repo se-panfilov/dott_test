@@ -43,11 +43,6 @@ function getImageUrl(list: ReadonlyArray<CarouselItem>, index: number): string |
   return item.img;
 }
 
-// TODO (S.Panfilov)  whatis the return type for an image?
-// function getCovers(docs: ReadonlyArray<Doc>): any {
-//   return docs.forEach(doc => getBookCover(doc, getComputedCoverSize()));
-// }
-
 export interface CarouselProps {
   itemsList: ReadonlyArray<CarouselItem>;
   interval?: number;
