@@ -11,7 +11,7 @@ function App(): React.ReactElement {
   const coverSize = getComputedCoverSize();
 
   function handleOnSearch(searchValue: string): void {
-    // TODO (S.Panfilov)  take care about requests order
+    // TODO (S.Panfilov) take care about requests order
     searchBook(searchValue).then(({ docs }) => {
       setBooksList(docs);
 
